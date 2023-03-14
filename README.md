@@ -35,6 +35,24 @@ prefix  = "terraform/state"
 }
 }
 
-
-
+** OUtro ponto seria o setup do service mesh istio para fornecer um leque de recursos de network e rotas, um deles é o ingress.
+Setup istio:
+istioctl install --set profile=default -y --set meshConfig.accessLogFile=/dev/stdout --set meshConfig.defaultConfig.gatewayTopology.numTrustedProxies=2
+Configurar um gateway do istio :
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+name: ada-dev-gateway
+namespace: default
+spec:
+selector:
+istio: ingressgateway
+servers:
+- hosts:
+    - '*.ada.dev'
+    - 'ada.dev'
+      port:
+      name: http
+      number: 80
+      protocol: HTTP
 
