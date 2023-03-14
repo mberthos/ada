@@ -56,3 +56,7 @@ servers:
       number: 80
       protocol: HTTP
 
+** Até onde entendi era so criação da infra basica, sem pensar em CICD dos MS.
+Se precisar disso um resumo é aproveitar o proprio github actions para disparar o CI(build e criação da imagem baseado no DockerFile), 
+subir a nova imagem para um registry e depois disso criação dos manifestos de CD para dentro de um repo(manifestos k8s), e ṕodemos usar 
+uma ferramenta por exemplo como o ArgoCD para fazer esse sync e o deploy.
