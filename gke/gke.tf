@@ -1,14 +1,14 @@
 terraform {
   backend "remote" {
-    organization = "Mottu"
+    organization = "Ada"
     workspaces {
-      prefix = "mottu-gke-"
+      prefix = "ada-gke-"
     }
   }
 }
 
 # Cluster GKE
-resource "google_container_cluster" "mottu_dev_cluster" {
+resource "google_container_cluster" "ada_dev_cluster" {
   name     = var.name
   location = var.region
   remove_default_node_pool = true
@@ -46,10 +46,10 @@ resource "google_container_cluster" "mottu_dev_cluster" {
 }
 
 # Node Pool Gerenciado Separadamente App
-resource "google_container_node_pool" "nodes_mottu_app" {
-  name       = "${google_container_cluster.mottu_dev_cluster.name}-mottuapp-nodepool"
+resource "google_container_node_pool" "nodes_ada_app" {
+  name       = "${google_container_cluster.ada_dev_cluster.name}-adaapp-nodepool"
   location   = var.region
-  cluster    = google_container_cluster.mottu_dev_cluster.name
+  cluster    = google_container_cluster.ada_dev_cluster.name
   node_count = var.gke_num_nodes_app
   autoscaling{
     min_node_count = var.gke_autoscaling_nodes_min
@@ -57,7 +57,7 @@ resource "google_container_node_pool" "nodes_mottu_app" {
   }
 
   node_config {
-    machine_type = var.machine_type_mottuapp
+    machine_type = var.machine_type_adaapp
     preemptible  = var.preemptible
     disk_size_gb = 50
     oauth_scopes = [

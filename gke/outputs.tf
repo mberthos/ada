@@ -10,13 +10,13 @@ output "project_id" {
 }
 
 output "kubernetes_cluster_name" {
-  value       = google_container_cluster.mottu_dev_cluster.name
+  value       = google_container_cluster.ada_dev_cluster.name
   description = "Nome do cluster GKE"
   sensitive   = true
 }
 
 output "kubernetes_cluster_host" {
-  value       = google_container_cluster.mottu_dev_cluster.endpoint
+  value       = google_container_cluster.ada_dev_cluster.endpoint
   description = "Host do cluster GKE"
   sensitive   = true
 }

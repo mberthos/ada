@@ -47,27 +47,27 @@ variable "private_cluster_config_master_ipv4_cidr_block" {
 }
 
 #subnets
-variable "vpc_ip_cidr_range|_priv1" {
+variable "vpc_ip_cidr_range_priv1" {
   default = "10.123.0.0/24"
   description = "vpc_ip_cidr_range"
 }
-variable "vpc_ip_cidr_range|_priv2" {
+variable "vpc_ip_cidr_range_priv2" {
   default = "10.123.1.0/24"
   description = "vpc_ip_cidr_range"
 }
-variable "vpc_ip_cidr_range|_priv3" {
+variable "vpc_ip_cidr_range_priv3" {
   default = "10.123.2.0/24"
   description = "vpc_ip_cidr_range"
 }
-variable "vpc_ip_cidr_range|_pub1" {
+variable "vpc_ip_cidr_range_pub1" {
   default = "10.123.3.0/24"
   description = "vpc_ip_cidr_range"
 }
-variable "vpc_ip_cidr_range|_pub2" {
+variable "vpc_ip_cidr_range_pub2" {
   default = "10.123.4.0/24"
   description = "vpc_ip_cidr_range"
 }
-variable "vpc_ip_cidr_range|_pub3" {
+variable "vpc_ip_cidr_range_pub3" {
   default = "10.123.5.0/24"
   description = "vpc_ip_cidr_range"
 }
@@ -117,7 +117,7 @@ variable "gke_autoscaling_nodes_min" {
   description = "gke_autoscaling_nodes_min"
 }
 
-variable "machine_type_mottuapp" {
+variable "machine_type_adaapp" {
   default = "e2-standard-4"
   description = " "
 }
