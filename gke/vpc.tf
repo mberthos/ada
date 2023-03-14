@@ -14,7 +14,7 @@ resource "google_compute_subnetwork" "subnet_priv1" {
   name          = sensitive("${var.project_id}-subnet-priv1")
   region        = var.region_vpc
   network       = google_compute_network.vpc.name
-  ip_cidr_range = var.vpc_ip_cidr_range
+  ip_cidr_range = var.vpc_ip_cidr_range_priv1
   purpose       = "PRIVATE"
   secondary_ip_range {
     range_name    = var.cluster_secondary_range_name
@@ -29,7 +29,7 @@ resource "google_compute_subnetwork" "subnet_priv2" {
   name          = sensitive("${var.project_id}-subnet-priv2")
   region        = var.region_vpc
   network       = google_compute_network.vpc.name
-  ip_cidr_range = var.vpc_ip_cidr_range
+  ip_cidr_range = var.vpc_ip_cidr_range_priv2
   purpose       = "PRIVATE"
   secondary_ip_range {
     range_name    = var.cluster_secondary_range_name
@@ -44,7 +44,7 @@ resource "google_compute_subnetwork" "subnet_priv3" {
   name          = sensitive("${var.project_id}-subnet--priv3")
   region        = var.region_vpc
   network       = google_compute_network.vpc.name
-  ip_cidr_range = var.vpc_ip_cidr_range
+  ip_cidr_range = var.vpc_ip_cidr_range_priv3
   purpose       = "PRIVATE"
   secondary_ip_range {
     range_name    = var.cluster_secondary_range_name
@@ -60,7 +60,7 @@ resource "google_compute_subnetwork" "subnet_pub1" {
   name          = sensitive("${var.project_id}-subnet-priv1")
   region        = var.region_vpc
   network       = google_compute_network.vpc.name
-  ip_cidr_range = var.vpc_ip_cidr_range
+  ip_cidr_range = var.vpc_ip_cidr_range_pub1
   purpose       = "PUBLIC"
   secondary_ip_range {
     range_name    = var.cluster_secondary_range_name
@@ -75,7 +75,7 @@ resource "google_compute_subnetwork" "subnet_pub2" {
   name          = sensitive("${var.project_id}-subnet-priv2")
   region        = var.region_vpc
   network       = google_compute_network.vpc.name
-  ip_cidr_range = var.vpc_ip_cidr_range
+  ip_cidr_range = var.vpc_ip_cidr_range_pub2
   purpose       = "PUBLIC"
   secondary_ip_range {
     range_name    = var.cluster_secondary_range_name
@@ -90,7 +90,7 @@ resource "google_compute_subnetwork" "subnet_pub3" {
   name          = sensitive("${var.project_id}-subnet--priv3")
   region        = var.region_vpc
   network       = google_compute_network.vpc.name
-  ip_cidr_range = var.vpc_ip_cidr_range
+  ip_cidr_range = var.vpc_ip_cidr_range_pub3
   purpose       = "PUBLIC"
   secondary_ip_range {
     range_name    = var.cluster_secondary_range_name
@@ -127,15 +127,15 @@ resource "google_compute_router_nat" "cluster-cnat" {
   nat_ips                            = google_compute_address.address.*.self_link
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
   subnetwork {
-    name = google_compute_subnetwork.subnet_pub1.self_link
+    name = google_compute_subnetwork.subnet_priv1.self_link
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
   subnetwork {
-    name = google_compute_subnetwork.subnet_pub2.self_link
+    name = google_compute_subnetwork.subnet_priv2.self_link
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
   subnetwork {
-    name = google_compute_subnetwork.subnet_pub3.self_link
+    name = google_compute_subnetwork.subnet_priv3.self_link
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
 }
@@ -148,7 +148,6 @@ resource "google_compute_firewall" "public_firewall" {
     protocol = "tcp"
     ports    = ["80", "443"]
   }
-
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["public"]
 }
@@ -161,7 +160,6 @@ resource "google_compute_firewall" "private_firewall" {
     protocol = "tcp"
     ports    = ["22"]
   }
-
   source_tags  = ["private"]
   target_tags  = ["private"]
 }
